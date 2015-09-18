@@ -29,14 +29,20 @@
 
 @implementation ViewController
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self.model loadModel];
     self.collectionView.collectionViewLayout = self.verticalLayout;
+    [self registerNibs];
+    [self.collectionView setCollectionViewLayout:self.verticalLayout animated:YES];
+}
+
+- (void)registerNibs
+{
     [self.collectionView registerNib:[UINib nibWithNibName:@"CollectionViewCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"cell"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"CollectionReusableView" bundle:[NSBundle mainBundle]] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"nombreCasa"];
-    [self.collectionView setCollectionViewLayout:self.verticalLayout animated:YES];
 }
 
 - (IBAction)segmentedControl:(UISegmentedControl *)sender
