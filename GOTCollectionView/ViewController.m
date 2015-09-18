@@ -22,7 +22,7 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) IBOutlet GotModel *model;
-@property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *layout;
+@property (strong, nonatomic) UICollectionViewFlowLayout *verticalLayout;
 @property (strong, nonatomic) UICollectionViewFlowLayout *horizonLayout;
 
 @end
@@ -33,14 +33,24 @@
 {
     [super viewDidLoad];
     [self.model loadModel];
+    self.collectionView.collectionViewLayout = self.verticalLayout;
     [self.collectionView registerNib:[UINib nibWithNibName:@"CollectionViewCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"cell"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"CollectionReusableView" bundle:[NSBundle mainBundle]] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"nombreCasa"];
-    
-    self.layout.headerReferenceSize = CGSizeMake(100, 100);
+    [self.collectionView setCollectionViewLayout:self.verticalLayout animated:YES];
 }
 
 - (IBAction)segmentedControl:(UISegmentedControl *)sender
 {
+    switch (sender.selectedSegmentIndex) {
+        case 0:
+            [self.collectionView setCollectionViewLayout:self.verticalLayout animated:YES];
+            break;
+        case 1:
+            [self.collectionView setCollectionViewLayout:self.horizonLayout animated:YES];
+            break;
+        default:
+            break;
+    }
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -75,11 +85,31 @@
     return cell;
 }
 
-- (UICollectionViewFlowLayout *)horizontalLayout
+- (UICollectionViewFlowLayout *)verticalLayout
+{
+    if (!_verticalLayout)
+    {
+        _verticalLayout = [[UICollectionViewFlowLayout alloc]init];
+        _verticalLayout.itemSize = CGSizeMake(200, 200);
+        _verticalLayout.headerReferenceSize = CGSizeMake(100, 100);
+        _verticalLayout.sectionInset = UIEdgeInsetsMake(20, 0, 20, 0);
+        _verticalLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    }
+    return _verticalLayout;
+}
+
+
+- (UICollectionViewFlowLayout *)horizonLayout
 {
     if (!_horizonLayout)
     {
+        _horizonLayout = [[UICollectionViewFlowLayout alloc]init];
+        _horizonLayout.itemSize = CGSizeMake(200, 200);
+        _horizonLayout.headerReferenceSize = CGSizeMake(200, 100);
+        _horizonLayout.sectionInset = UIEdgeInsetsMake(20, 0, 20, 0);
+        _horizonLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     }
+    return _horizonLayout;
 }
 
 

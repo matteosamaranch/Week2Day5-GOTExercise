@@ -56,7 +56,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="uYV-Pv-RgP" id="nb5-7l-Vpn"/>
-                        <outlet property="layout" destination="NJT-nG-Jax" id="6Iz-OJ-i78"/>
                         <outlet property="model" destination="Z9U-IF-Xeh" id="ok6-cC-fK5"/>
                     </connections>
                 </viewController>
